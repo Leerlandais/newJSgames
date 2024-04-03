@@ -1,3 +1,28 @@
 body {
     background-color: #f4d292;
 }
+
+.global {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#typingField {
+    margin: 0 auto;
+    width: 60%;  
+ /*   width: 28%;  /* width for home  */
+    border: 2px solid;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 24px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.typingGrid {
+    border: 1px solid transparent;  
+    width: calc((100% - 20px)/7);
+    height: 30px;
+}
