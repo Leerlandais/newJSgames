@@ -1,4 +1,4 @@
-const bigGrid = 210;                                          
+const bigGrid = 210;                                             
 const bigGridFind = document.getElementById("typingField");
 const typingGridArray = [];
 const startTypingGame = document.getElementById("startTypingGame");
@@ -26,10 +26,14 @@ startTypingGame.addEventListener("click", function(){
 function pickRandomWord () {
     let pickWord = Math.floor(Math.random() * wordsLeftToType.length);
     dropWord = wordsLeftToType[pickWord];
+    pickWord = "";
     dropBrick(dropWord);
 }
 
 function dropBrick (dropThis) {
+    const dropNewInterval = setInterval(() => {
+        pickRandomWord();
+    }, 25000);
     let dropSpot = Math.floor(Math.random() * 6);
     let dropArea = document.getElementById(dropSpot);
     //   dropArea.style.border = "solid";
@@ -38,6 +42,7 @@ function dropBrick (dropThis) {
     const dropInterval = setInterval(() => {
         if (dropArea == null) {
             clearInterval(dropInterval);
+            clearInterval(dropNewInterval);
             gameOver();
             return;
         }
@@ -47,17 +52,26 @@ function dropBrick (dropThis) {
         dropArea = document.getElementById(dropSpot);
         if (dropArea == null) { // Check if dropArea is null again inside the loop
             clearInterval(dropInterval);
+            clearInterval(dropNewInterval);
             gameOver();
             return;
         }
         dropArea.textContent = dropThis;
-    }, 500);
-    
+    }, 2500);
     document.addEventListener("keydown", (event) => {      
         console.log (dropWord[0]);
-        console.log(event.get('key'));
+        dropLet = dropWord[0]
+        let keyCheck = event.code;
+        keyCheck === "KeyW" ? keyCheck = "KeyZ" : 
+            keyCheck === "KeyZ" ? keyCheck = "KeyW" :
+                keyCheck === "Semicolon" ? keyCheck = "KeyM" :
+                    keyCheck === "KeyA" ? keyCheck = "KeyQ" :
+                        keyCheck === "KeyQ" ? keyCheck = "KeyA" :
+                            keyCheck === "KeyM" ? keyCheck = "Semicolon" : keyCheck = keyCheck;
+        keyCheck = keyCheck[3].toLowerCase();
+        keyCheck == dropLet ? console.log("match") : console.log("bad");
         
-         event === dropWord[0] ? dropWord.style.color = "green" : dropWord.style.color = "red"; 
+   //     event === dropWord[0] ? dropWord.style.color = "green" : dropWord.style.color = "red"; 
     });
     }
 
