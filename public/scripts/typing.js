@@ -1,4 +1,4 @@
-const bigGrid = 210;                                             
+const bigGrid = 168;                                             
 const bigGridFind = document.getElementById("typingField");
 const typingGridArray = [];
 const startTypingGame = document.getElementById("startTypingGame");
@@ -18,7 +18,10 @@ for (let i = 0; i < bigGrid; i++) {
 
 startTypingGame.addEventListener("click", function(){
     startTypingGame.style.display = "none";
-    pickRandomWord();
+    dropNewInterval = setInterval(() => {
+        pickRandomWord();
+    }, 2500);
+   
 
 });
 
@@ -26,16 +29,17 @@ startTypingGame.addEventListener("click", function(){
 function pickRandomWord () {
     let pickWord = Math.floor(Math.random() * wordsLeftToType.length);
     dropWord = wordsLeftToType[pickWord];
+    console.log(wordsLeftToType);
+    wordsLeftToType.splice(pickWord,1);
     pickWord = "";
     dropBrick(dropWord);
 }
 
 function dropBrick (dropThis) {
-    const dropNewInterval = setInterval(() => {
-        pickRandomWord();
-    }, 25000);
-    let dropSpot = Math.floor(Math.random() * 6);
-    let dropArea = document.getElementById(dropSpot);
+    let dropSpot = "";
+    dropSpot = Math.floor(Math.random() * 6);
+    let newDropSpot = dropSpot;
+    let dropArea = document.getElementById(newDropSpot);
     //   dropArea.style.border = "solid";
     //  dropArea.textContent = dropThis;
     
@@ -48,16 +52,16 @@ function dropBrick (dropThis) {
         }
         dropArea.style.border = "none";
         dropArea.textContent = "";
-        dropSpot += 7;
-        dropArea = document.getElementById(dropSpot);
-        if (dropArea == null) { // Check if dropArea is null again inside the loop
+        newDropSpot += 7;
+        dropArea = document.getElementById(newDropSpot);
+        if (dropArea == null) {
             clearInterval(dropInterval);
             clearInterval(dropNewInterval);
             gameOver();
             return;
         }
         dropArea.textContent = dropThis;
-    }, 2500);
+    }, 500);
     document.addEventListener("keydown", (event) => {      
         console.log (dropWord[0]);
         dropLet = dropWord[0]
